@@ -44,7 +44,7 @@ func parseBoxID(boxID string) (bool, bool) {
 }
 
 func main() {
-	boxIds := getBoxIds("input_day_2.csv")
+	boxIds := getBoxIds("../../input_day_2.csv")
 	var twoCount, threeCount int
 	for _, boxID := range boxIds {
 		isTwo, isThree := parseBoxID(boxID)
