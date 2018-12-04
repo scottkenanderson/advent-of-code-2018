@@ -46,11 +46,11 @@ func getMatch(record string, regex string) int {
 }
 
 func getGuardID(record string) int {
-	return getMatch(record, "Guard #(\\d+)")
+	return getMatch(record, `Guard #(\d+)`)
 }
 
 func getMinute(record string) int {
-	return getMatch(record, "\\[....-..-.. ..:(\\d{2})\\]")
+	return getMatch(record, `\[....-..-.. ..:(\d{2})\]`)
 }
 
 func max(numbers map[int]int) (int, int) {
@@ -77,9 +77,9 @@ type guard struct {
 	sleeps []sleep
 }
 
-func getSleepiestMinute(guard *guard) (int, int) {
+func (g *guard) getSleepiestMinute() (int, int) {
 	minutes := make(map[int]int)
-	sleeps := guard.sleeps
+	sleeps := g.sleeps
 	for i := range sleeps {
 		for m := sleeps[i].start; m < sleeps[i].end; m++ {
 			minutes[m]++
@@ -118,7 +118,7 @@ func getGuardRecords(schedule []string) (map[int]*guard, map[int]int) {
 func firstStar(schedule []string) int {
 	guardRecords, guardSleepTime := getGuardRecords(schedule)
 	sleepiestGuard, _ := max(guardSleepTime)
-	sleepiestMinute, _ := getSleepiestMinute(guardRecords[sleepiestGuard])
+	sleepiestMinute, _ := guardRecords[sleepiestGuard].getSleepiestMinute()
 	return sleepiestGuard * sleepiestMinute
 }
 
@@ -126,7 +126,7 @@ func secondStar(schedule []string) int {
 	guardRecords, _ := getGuardRecords(schedule)
 	var sleepiestMinute, maxTimes, sleepiestGuard int
 	for k, v := range guardRecords {
-		m, t := getSleepiestMinute(v)
+		m, t := v.getSleepiestMinute()
 		if t > maxTimes {
 			maxTimes = t
 			sleepiestMinute = m
