@@ -41,7 +41,14 @@ func Test_firstStar(t *testing.T) {
 		position=<-6,  0> velocity=< 2,  0>
 		position=< 5,  9> velocity=< 1, -2>
 		position=<14,  7> velocity=<-2,  0>
-		position=<-3,  6> velocity=< 2, -1>`}, want: ""},
+		position=<-3,  6> velocity=< 2, -1>`}, want: `#...#..###
+#...#...#.
+#...#...#.
+#####...#.
+#...#...#.
+#...#...#.
+#...#...#.
+#...#..###`},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
